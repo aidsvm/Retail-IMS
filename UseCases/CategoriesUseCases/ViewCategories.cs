@@ -18,7 +18,6 @@ namespace UseCases
         {
             return categoryRepository.GetCategories();
 
-
         }
     }
 }
