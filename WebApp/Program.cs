@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Plugins.DataStore.InMemory;
 using UseCases;
 using UseCases.DataStorePluginInterfaces;
+using UseCases.UseCaseInferfaces;
 using WebApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,14 +17,17 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryInMemoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductInMemoryRepository>();
 
-//Dependency Injection for Use Cases and Repository
+//Dependency Injection for Category Use Cases and Repository
 builder.Services.AddTransient<IViewCategories, ViewCategories>();
 builder.Services.AddTransient<IAddCategoryUseCase, AddCategoryUseCase>();
 builder.Services.AddTransient<IEditCategoryUseCase, EditCategoryUseCase>();
 builder.Services.AddTransient<IGetCategoryByldUseCase, GetCategoryByldUseCase>();
 builder.Services.AddTransient<IDeleteCategoryUseCase, DeleteCategoryUseCase>();
+//Depency Injection for Product Use Cases and Repository
 builder.Services.AddTransient<IViewProductsUseCase, ViewProductsUseCase>();
 builder.Services.AddTransient<IAddProductUseCase, AddProductUseCase>();
+builder.Services.AddTransient<IEditProductUseCase, EditProductUseCase>();
+builder.Services.AddTransient<IGetProductByIdUseCase, GetProductByIdUseCase>();
 
 var app = builder.Build();
 
