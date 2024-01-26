@@ -8,7 +8,7 @@ namespace UseCases.UseCaseInferfaces
     {
         private readonly IProductRepository productRepository;
 
-        public GetProductByIdUseCase(IProductRepository productRepository)
+         public GetProductByIdUseCase(IProductRepository productRepository)
         {
             this.productRepository = productRepository;
         }

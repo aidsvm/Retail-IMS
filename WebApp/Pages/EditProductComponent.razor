@@ -4,6 +4,7 @@
 @inject UseCases.IAddProductUseCase AddProductUseCase
 @inject UseCases.UseCaseInferfaces.IGetProductByIdUseCase GetProductByIdUseCase
 @inject UseCases.IEditProductUseCase EditProductUseCase
+@inject UseCases.IViewCategories ViewCategories
 
 
 <h3>Edit Product</h3>
@@ -17,6 +18,17 @@
         <div class="form-group">
             <label for="name">Name</label>
             <InputText id="name" @bind-Value="product.Name" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" @bind="product.CategoryId" class="form-control">
+                <option selected></option>
+                @foreach (var cat in categories)
+                {
+                    <option value="@cat.CategoryId">@cat.Name</option>
+                }
+            </select>
         </div>
 
         <div class="form-group">
@@ -35,36 +47,39 @@
 }
 
 @code {
-            [Parameter]
-            public string ProductId { get; set; }
+    [Parameter]
+    public string ProductId { get; set; }
 
     private Product product;
+    private IEnumerable<Category> categories;
 
-        protected override void OnInitialized()
+    protected override void OnInitialized()
+    {
+     
+        base.OnInitialized();
+        categories = ViewCategories.Execute();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (int.TryParse(this.ProductId, out int iProductId))
         {
-            base.OnInitialized();
+            this.product = GetProductByIdUseCase.Execute(iProductId);
         }
+    }
 
-        protected override void OnParametersSet()
-        {
-            base.OnParametersSet();
+    private void OnValidSumit()
+    {
+        EditProductUseCase.Execute(this.product);
+        NavigationManager.NavigateTo("/products");
+    }
 
-            if (int.TryParse(this.ProductId, out int iProductId))
-            {
-                this.product = GetProductByIdUseCase.Execute(iProductId);
-            }
-        }
-
-        private void OnValidSumit()
-        {
-            EditProductUseCase.Execute(this.product);
-            NavigationManager.NavigateTo("/products");
-        }
-
-        private void OnCancel()
-        {
-            NavigationManager.NavigateTo("/products");
-        }
+    private void OnCancel()
+    {
+        NavigationManager.NavigateTo("/products");
+    }
 
     }
 

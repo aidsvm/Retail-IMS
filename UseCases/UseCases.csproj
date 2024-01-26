@@ -13,10 +13,12 @@
     <None Remove="DataStorePluginInterfaces\" />
     <None Remove="UseCaseInferfaces\" />
     <None Remove="CategoriesUseCases\" />
+    <None Remove="ProductsUseCases\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataStorePluginInterfaces\" />
     <Folder Include="UseCaseInferfaces\" />
     <Folder Include="CategoriesUseCases\" />
+    <Folder Include="ProductsUseCases\" />
   </ItemGroup>
 </Project>
