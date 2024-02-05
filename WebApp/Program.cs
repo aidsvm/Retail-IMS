@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Plugins.DataStore.InMemory;
 using UseCases;
@@ -29,6 +30,13 @@ builder.Services.AddTransient<IAddProductUseCase, AddProductUseCase>();
 builder.Services.AddTransient<IEditProductUseCase, EditProductUseCase>();
 builder.Services.AddTransient<IGetProductByIdUseCase, GetProductByIdUseCase>();
 builder.Services.AddTransient<IDeleteProductUseCase, DeleteProductUseCase>();
+builder.Services.AddTransient<IViewProductsByCategoryId, ViewProductsByCategoryId>();
+builder.Services.AddTransient<ISellProductUseCase, SellProductUseCase>();
+
+//setting culture
+Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+
 
 var app = builder.Build();
 

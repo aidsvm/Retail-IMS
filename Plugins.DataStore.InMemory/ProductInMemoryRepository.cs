@@ -63,6 +63,11 @@ namespace Plugins.DataStore.InMemory
         {
             return products?.FirstOrDefault(x => x.ProductId == productId);
         }
+
+        IEnumerable<Product> IProductRepository.GetProductsByCategoryId(int categoryId)
+        {
+            return products.Where(x => x.CategoryId == categoryId);
+        }
     }
 }
 
