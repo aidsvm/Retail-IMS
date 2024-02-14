@@ -36,6 +36,10 @@
     private string errorMessage;
 
     [Parameter]
+    public string CashierName { get; set; }
+
+
+    [Parameter]
     public Product SelectedProduct { get; set; }
 
     [Parameter]
@@ -68,6 +72,12 @@
 
     private void SellProduct()
     {
+        if (string.IsNullOrWhiteSpace(CashierName))
+        {
+            errorMessage = "The Cashier's name cannot be blank!";
+            return;
+        }
+
         var product = GetProductByIdUseCase.Execute(productToSell.ProductId);
         if (productToSell.Quantity <= 0)
         {
@@ -75,14 +85,15 @@
         }
         else if (product.Quantity >= productToSell.Quantity)
         {
+
             OnProductSold.InvokeAsync(productToSell);
             errorMessage = string.Empty;
-            SellProductUseCase.Execute(productToSell.ProductId, productToSell.Quantity.Value);
+            SellProductUseCase.Execute(CashierName, productToSell.ProductId, productToSell.Quantity.Value);
         }
 
         else
         {
-            errorMessage = $"{product.Name} only has {product.Quantity} left!";
+            errorMessage = $"You cannot sell {productToSell.Quantity}, {product.Name} only has {product.Quantity} left!";
         }
 
     }

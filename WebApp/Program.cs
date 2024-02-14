@@ -17,6 +17,7 @@ builder.Services.AddSingleton<WeatherForecastService>();
 //Dependency Injection for In-Memory Data Storing
 builder.Services.AddScoped<ICategoryRepository, CategoryInMemoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductInMemoryRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionInMemoryRepository>();
 
 //Dependency Injection for Category Use Cases and Repository
 builder.Services.AddTransient<IViewCategories, ViewCategories>();
@@ -32,6 +33,8 @@ builder.Services.AddTransient<IGetProductByIdUseCase, GetProductByIdUseCase>();
 builder.Services.AddTransient<IDeleteProductUseCase, DeleteProductUseCase>();
 builder.Services.AddTransient<IViewProductsByCategoryId, ViewProductsByCategoryId>();
 builder.Services.AddTransient<ISellProductUseCase, SellProductUseCase>();
+builder.Services.AddTransient<IRecordTransactionsUseCase, RecordTransactionsUseCase>();
+builder.Services.AddTransient<IGetTodayTransactionUseCase, GetTodayTransactionUseCase>();
 
 //setting culture
 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
