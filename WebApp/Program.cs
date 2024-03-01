@@ -9,6 +9,10 @@ using WebApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//setting culture
+Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -25,6 +29,7 @@ builder.Services.AddTransient<IAddCategoryUseCase, AddCategoryUseCase>();
 builder.Services.AddTransient<IEditCategoryUseCase, EditCategoryUseCase>();
 builder.Services.AddTransient<IGetCategoryByldUseCase, GetCategoryByldUseCase>();
 builder.Services.AddTransient<IDeleteCategoryUseCase, DeleteCategoryUseCase>();
+
 //Depency Injection for Product Use Cases and Repository
 builder.Services.AddTransient<IViewProductsUseCase, ViewProductsUseCase>();
 builder.Services.AddTransient<IAddProductUseCase, AddProductUseCase>();
@@ -36,9 +41,9 @@ builder.Services.AddTransient<ISellProductUseCase, SellProductUseCase>();
 builder.Services.AddTransient<IRecordTransactionsUseCase, RecordTransactionsUseCase>();
 builder.Services.AddTransient<IGetTodayTransactionUseCase, GetTodayTransactionUseCase>();
 
-//setting culture
-Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+builder.Services.AddTransient<IGetTransactionsUseCase, GetTransactionsUseCase>();
+
+
 
 
 var app = builder.Build();

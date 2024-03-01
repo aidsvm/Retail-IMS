@@ -7,7 +7,7 @@
             <tr>
                 <th>Cashier Name</th>
                 <th>Product Name</th>
-                <th>Date Time</th>
+                <th>Date / Time</th>
                 <th>Quantity Before</th>
                 <th>Quantity Sold</th>
                 <th>Quantity After</th>
@@ -20,7 +20,7 @@
                 <tr>
                     <td>@tran.CashierName</td>
                     <td>@tran.ProductName</td>
-                    <td>@tran.TimeStamp.ToString("MM-dd-yy hh:mm")</td>
+                    <td>@tran.TimeStamp.ToString("MM-dd hh:mm")</td>
                     <td>@tran.BeforeQuantity</td>
                     <td>@tran.SoldQuantity</td>
                     <td>@(tran.BeforeQuantity - tran.SoldQuantity)</td>
