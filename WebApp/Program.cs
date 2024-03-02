@@ -1,11 +1,15 @@
 ﻿using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.DependencyInjection;
 using Plugins.DataStore.InMemory;
 using UseCases;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.UseCaseInferfaces;
 using WebApp.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Plugins.DataStore.SQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +48,10 @@ builder.Services.AddTransient<IGetTodayTransactionUseCase, GetTodayTransactionUs
 builder.Services.AddTransient<IGetTransactionsUseCase, GetTransactionsUseCase>();
 
 
-
+builder.Services.AddDbContext<MarketContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 var app = builder.Build();
 
