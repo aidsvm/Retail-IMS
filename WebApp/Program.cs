@@ -20,7 +20,6 @@ Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 
 //Dependency Injection for In-Memory Data Storing
 //builder.Services.AddScoped<ICategoryRepository, CategoryInMemoryRepository>();
