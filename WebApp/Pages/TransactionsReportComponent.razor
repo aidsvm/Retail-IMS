@@ -1,4 +1,5 @@
 ﻿@page "/transactions"
+@attribute [Authorize(Policy = "AdminOnly")]
 
 @inject IJSRuntime JSRuntime
 @inject IGetTransactionsUseCase GetTransactionsUseCase
@@ -16,21 +17,20 @@
         <label for="enddate">End Date</label>
         <input type="date" id="enddate" class="form-control" @bind-value="endDate" />
     </div>
-    <div class="col-2">
+    <div class="col-2 d-flex justify-content-center">
         <label>&nbsp;</label>
-        <button type="button" class="btn btn-primary" @onclick="LoadTransactions">Search</button>
+        <button type="button" class="btn btn-primary equal-width" @onclick="LoadTransactions">Search</button>
     </div>
-    <div class="col-2">
+    <div class="col-2 d-flex justify-content-center">
         <label>&nbsp;</label>
-        <button type="button" class="btn btn-primary" @onclick="PrintReport">Print</button>
-   
+        <button type="button" class="btn btn-secondary equal-width" @onclick="PrintReport">Print</button>
     </div>
 </div>
 <br />
 
 @if (transactions != null)
 {
-    <div id="PrintDiv">
+    <div id="printarea">
         <table class="table">
             <thead>
                 <tr>
@@ -96,7 +96,7 @@
 
     private void PrintReport()
     {
-        JSRuntime.InvokeVoidAsync("printDiv");
+        JSRuntime.InvokeVoidAsync("print");
     }
 }
 

@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,9 +23,15 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
 //Dependency Injection for In-Memory Data Storing
-builder.Services.AddScoped<ICategoryRepository, CategoryInMemoryRepository>();
-builder.Services.AddScoped<IProductRepository, ProductInMemoryRepository>();
-builder.Services.AddScoped<ITransactionRepository, TransactionInMemoryRepository>();
+//builder.Services.AddScoped<ICategoryRepository, CategoryInMemoryRepository>();
+//builder.Services.AddScoped<IProductRepository, ProductInMemoryRepository>();
+//builder.Services.AddScoped<ITransactionRepository, TransactionInMemoryRepository>();
+
+//Dependency Injection for EF Core Data Storing
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
 
 //Dependency Injection for Category Use Cases and Repository
 builder.Services.AddTransient<IViewCategories, ViewCategories>();
@@ -49,9 +55,23 @@ builder.Services.AddTransient<IGetTransactionsUseCase, GetTransactionsUseCase>()
 
 
 builder.Services.AddDbContext<MarketContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+builder.Services.AddDbContext<AccountContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AccountContextConnection")));
+
+builder.Services.AddAuthorization(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.AddPolicy("AdminOnly",
+               policy => policy.RequireClaim("Position", "Admin"));
+    options.AddPolicy("CashierOnly",
+               policy => policy.RequireClaim("Position", "Cashier"));
 });
+
+
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AccountContext>();
 
 var app = builder.Build();
 
@@ -68,6 +88,14 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+});
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");

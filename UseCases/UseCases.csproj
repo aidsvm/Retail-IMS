@@ -17,7 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataStorePluginInterfaces\" />
-    <Folder Include="UseCaseInferfaces\" />
     <Folder Include="CategoriesUseCases\" />
     <Folder Include="ProductsUseCases\" />
   </ItemGroup>

@@ -67,6 +67,25 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #printarea, #printarea * {
+        visibility: visible;
+    }
+    #printarea {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
+
+.equal-width {
+    width: 50%;
+}
+
 
 
 
